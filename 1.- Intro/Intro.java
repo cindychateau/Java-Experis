@@ -34,7 +34,7 @@ public class Intro {
         String x = "Hola";
         String y = "hola";
         System.out.println(x.equals(y)); //Comparamos dos textos case sensitive
-        System.out.println(x.equalsIgnoreCase(y)); //Comparamos dos textos case sensitive
+        System.out.println(x.equalsIgnoreCase(y)); //Comparamos dos textos SIN case sensitive
 
         //CONDICIONAL
         if(miEntero == 400) { // == != > >= < <=
@@ -123,6 +123,62 @@ public class Intro {
             System.out.println("entro?");
         }while(num1 < num2);
 
+        /* ARRAY o ARREGLOS - una vez establecido el tamaño NO puede cambiarse */
+        int[] miArreglo; //Declaración
+        miArreglo = new int[5]; //Inicialización, incluyo el tamaño
+        miArreglo[0] = 4;
+        miArreglo[1] = 8;
+        miArreglo[2] = 8;
+        miArreglo[3] = 5;
+        miArreglo[4] = 9;
+
+        int[] miArreglo2 = {4, 8, 8, 5, 9}; //Implícitamente establefemos el tamaño de 5
+        miArreglo2[2] = 10;
+        System.out.println(miArreglo2[2]);
+
+        //¿Cómo recorremos un array?
+        for(int indice=0; indice < miArreglo.length; indice++) {
+            System.out.println(miArreglo[indice]);
+        }
+
+        saludo();
+        saludo();
+
+        int resultado = sumatoria(5, 4); //resultado = 9
+        System.out.println(resultado);
+
+        saludo("Elena");
+        saludo("Elena", "De Troya");
+ 
+    }
+
+    /*Firma de método: public static void saludo()
+    Permisos de función: public, private, protected
+    static: es de la clase (Más detalle de esto en la sesión de OOP)
+    Tipo de valor de retorno: int, boolean, void
+    nombre de función: camelCase para el nombre
+    (argumento a recibir)
+    */
+    public static void saludo() {
+        System.out.println("Hola mundo");
+    }
+    //numero1 = 5; numero2 = 4
+    //suma = 5+4 = 9
+    public static int sumatoria(int numero1, int numero2) {
+        if(numero1 < 10) {
+            return numero1+numero2;
+        } 
+        return numero1-numero2;
+        // int suma = numero1 + numero2;
+        // return suma;
+    }
+
+    public static void saludo(String nombre) {
+        System.out.println("Hola "+nombre);
+    }
+
+    public static void saludo(String nombre, String apellido) {
+        System.out.println("Hola "+nombre+apellido);
     }
 
 }
