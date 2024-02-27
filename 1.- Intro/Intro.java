@@ -4,7 +4,9 @@ camelCase - primeraMinusculaElRestoMayuscula -> Nombre de variables y nombre de 
 javac NombreArchivo.java -> compilar
 java NombreArchivo -> interpreta/ejecuta
  */
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 public class Intro {
 
     public static void main(String[] args) {
@@ -149,6 +151,52 @@ public class Intro {
 
         saludo("Elena");
         saludo("Elena", "De Troya");
+
+        //ArrayList: Lista dinámica
+        //add, get, remove, contains, indexOf, size
+        ArrayList<Integer> listaNumeros = new ArrayList<Integer>();
+        listaNumeros.add(10);
+        listaNumeros.add(30);
+        listaNumeros.add(20);
+        listaNumeros.add(30);
+
+        System.out.println(listaNumeros.get(1));
+        System.out.println(listaNumeros.size());
+        System.out.println(listaNumeros.contains(10));
+        System.out.println(listaNumeros.indexOf(30)); //Regresarme el índice de la primera incidencia
+        System.out.println(listaNumeros.remove(listaNumeros.indexOf(30)));
+        System.out.println(listaNumeros.get(1));
+
+        for(int posicion=0; posicion < listaNumeros.size(); posicion++) {
+            System.out.println(listaNumeros.get(posicion));
+        }
+
+        for (Integer i : listaNumeros)
+            System.out.println(i);
+
+        HashMap<String, String> estudiante = new HashMap<String, String>();
+        estudiante.put("nombre", "Elena");
+        estudiante.put("apellido", "De Troya");
+        estudiante.put("email", "elena@gmail.com");
+        estudiante.put("curso", "Java");
+
+        System.out.println(estudiante.get("nombre"));
+        System.out.println(estudiante.get("curso"));
+
+        Set<String> claves = estudiante.keySet(); //Estoy obteniendo un set de las claves de mi HashMap
+        /*
+        claves = {"nombre", "apellido", "email", "curso"}
+        clave = "nombre"
+        ->nombre = Elena
+        ---
+        clave = "apellido"
+        ->apellido = De Troya
+         */
+        for(String clave : claves) {
+            System.out.println(clave + " = " + estudiante.get(clave));
+        }
+
+        estudiante.forEach((clave, valor) -> System.out.println(clave + " = " + valor));
  
     }
 
