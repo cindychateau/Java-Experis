@@ -1,7 +1,7 @@
 package com.experis.cynthia;
 
 //Vehiculo super, Auto subclase
-public class Auto extends Vehiculo {
+public class Auto extends Vehiculo implements manejarVehiculo, otraInterface {
 	
 	
 	private String placas;
@@ -34,6 +34,18 @@ public class Auto extends Vehiculo {
 		//Basarme en la clase superior
 		super.imprimir();
 		System.out.println("Y las placas son:"+placas);
+	}
+	
+	public void acelerar() {
+		System.out.println("Estoy pisando el acelerador");
+		velocidad += 2;
+		System.out.println("Mi velocidad es de:"+velocidad);
+	}
+	
+	public void desacelerar() {
+		System.out.println("Estoy pisando el freno");
+		velocidad -= 2;
+		System.out.println("Mi velocidad es de:"+velocidad);
 	}
 	
 }

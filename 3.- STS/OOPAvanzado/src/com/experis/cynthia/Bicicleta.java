@@ -1,6 +1,6 @@
 package com.experis.cynthia;
 
-public class Bicicleta extends Vehiculo {
+public class Bicicleta extends Vehiculo implements manejarVehiculo {
 	
 	private String tipo;
 
@@ -17,7 +17,17 @@ public class Bicicleta extends Vehiculo {
 		this.tipo = tipo;
 	}
 	
+	public void acelerar() {
+		System.out.println("Pedaleo más rápido");
+		velocidad += 1;
+		System.out.println("Mi velocidad es de:"+velocidad);
+	}
 	
+	public void desacelerar() {
+		System.out.println("Bajo la velocidad bajando despacio mis pies");
+		velocidad -= 1;
+		System.out.println("Mi velocidad es de:"+velocidad);
+	}
 	
 	
 }

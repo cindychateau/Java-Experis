@@ -17,6 +17,17 @@ public class Aplicacion {
 		Bicicleta bici1 = new Bicicleta(2024, "Apache", "Nuevo", "verde", 10, "Bici de ninios");
 		System.out.println("Cantidad de ruedas de bici:"+bici1.getCantidadRuedas());
 		
+		bici1.manejar();
+		automovil1.manejar();
+		
+		bici1.acelerar();
+		bici1.acelerar();
+		
+		automovil1.acelerar();
+		automovil1.desacelerar();
+		
+		System.out.println(automovil1); //Llamar al toString()
+		
 	}
 
 }

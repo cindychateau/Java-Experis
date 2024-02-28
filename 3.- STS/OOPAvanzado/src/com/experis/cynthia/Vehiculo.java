@@ -8,6 +8,8 @@ public class Vehiculo {
 	private String color;
 	private int cantidadRuedas;
 	
+	protected int velocidad = 0;
+	
 	public Vehiculo() {
 	}
 
@@ -62,5 +64,13 @@ public class Vehiculo {
 	public void imprimir() {
 		System.out.println("Anio:"+anio+" Marca:"+marca+" Modelo:"+modelo+" Color:"+color+" Ruedas:"+cantidadRuedas);
 	}
+
+	@Override
+	public String toString() {
+		return "Detalles del vehiculo: [anio=" + anio + ", marca=" + marca + ", modelo=" + modelo + ", color=" + color
+				+ ", cantidadRuedas=" + cantidadRuedas + ", velocidad=" + velocidad + "]";
+	}
+	
+	
 	
 }
