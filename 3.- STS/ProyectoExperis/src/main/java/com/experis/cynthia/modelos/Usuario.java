@@ -2,19 +2,44 @@ package com.experis.cynthia.modelos;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="usuarios")
 public class Usuario {
 	
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY) // AI
 	private long id;
+	
+	@NotEmpty
+	@Size(min=2, max=100)
 	private String nombre;
+	
+	@NotEmpty
+	@Size(min=2, max=100)
 	private String apellido;
+	
+	@NotEmpty
+	@Size(min=2, max=200)
 	private String email;
+	
+	@Column(updatable=false) //Este atributo solo se ingresa una vez, y NUNCA se actualiza
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date createdAt;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date updatedAt;
 	
 	public Usuario() {
@@ -82,6 +107,14 @@ public class Usuario {
 		this.updatedAt = updatedAt;
 	}
 	
+	@PrePersist //Antes de hacer un nuevo registro
+	protected void onCreate() {
+		this.createdAt = new Date(); //DEFAULT CURRENT_TIMESTAMP
+	}
 	
+	@PreUpdate //Antes de la actualización
+	protected void onUpdate() {
+		this.updatedAt = new Date(); // DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+	}
 	
 }
