@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.experis.cynthia.modelos.Direccion;
+import com.experis.cynthia.modelos.Salon;
 import com.experis.cynthia.modelos.Usuario;
 import com.experis.cynthia.repositorios.RepositorioDirecciones;
+import com.experis.cynthia.repositorios.RepositorioSalones;
 import com.experis.cynthia.repositorios.RepositorioUsuarios;
 
 @Service
@@ -20,13 +22,20 @@ public class Servicios {
 	@Autowired
 	private RepositorioDirecciones repoDirecciones;
 	
+	@Autowired
+	private RepositorioSalones repoSalones;
+	
 	//Me regrese una lista con todos los usuarios
 	public List<Usuario> todosUsuarios(){
 		return repoUsuarios.findAll();
 	}
 	
 	//Guardar usuario
-	public Usuario guardarUsuario(Usuario nuevoUsuario) {
+	public Usuario guardarUsuario(Usuario nuevoUsuario, Long salon_id) {
+		//Obtengo el salon en base al id
+		Salon salonUsuario = muestraSalon(salon_id);
+		nuevoUsuario.setSalon(salonUsuario);
+		
 		return repoUsuarios.save(nuevoUsuario);
 	}
 	
@@ -49,6 +58,14 @@ public class Servicios {
 		//Guardamos y regresamos la nuevaDireccion
 		return repoDirecciones.save(nuevaDireccion);
 		
+	}
+	
+	public List<Salon> muestraSalones() {
+		return repoSalones.findAll();
+	}
+	
+	public Salon muestraSalon(Long id) {
+		return repoSalones.findById(id).orElse(null);
 	}
 	
 }

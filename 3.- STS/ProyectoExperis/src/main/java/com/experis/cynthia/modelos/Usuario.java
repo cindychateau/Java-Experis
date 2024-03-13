@@ -1,8 +1,12 @@
 package com.experis.cynthia.modelos;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,6 +15,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -45,8 +53,22 @@ public class Usuario {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date updatedAt;
 	
+	@JsonManagedReference(value="direcciones-json") //Objeto Usuario SI va a mostrar dirección
 	@OneToOne(mappedBy="usuario", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Direccion direccion;
+	
+	@JsonBackReference(value="salones-json") //No mandamos el salon
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="salon_id") //Llave foránea
+	private Salon salon;
+	
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(
+			name="usuarios_tienen_hobbies",
+			joinColumns = @JoinColumn(name="usuario_id"), //la columna que une con ESTA clase
+			inverseJoinColumns = @JoinColumn(name="hobby_id") //columna que se une a mi contraparte
+			)
+	private List<Hobby> hobbies;
 	
 	
 	public Usuario() {
@@ -130,6 +152,22 @@ public class Usuario {
 
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
+	}
+
+	public Salon getSalon() {
+		return salon;
+	}
+
+	public void setSalon(Salon salon) {
+		this.salon = salon;
+	}
+
+	public List<Hobby> getHobbies() {
+		return hobbies;
+	}
+
+	public void setHobbies(List<Hobby> hobbies) {
+		this.hobbies = hobbies;
 	}
 	
 	

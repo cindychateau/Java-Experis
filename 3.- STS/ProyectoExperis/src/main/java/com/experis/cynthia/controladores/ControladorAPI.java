@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.experis.cynthia.modelos.Direccion;
+import com.experis.cynthia.modelos.Salon;
 import com.experis.cynthia.modelos.Usuario;
 import com.experis.cynthia.servicios.Servicios;
 
@@ -31,11 +32,12 @@ public class ControladorAPI {
 	@PostMapping("/usuarios")
 	public Usuario apiCrearUsuario(@RequestParam("nombre") String nombre,
 								   @RequestParam("apellido") String apellido,
-								   @RequestParam("email") String email) {
+								   @RequestParam("email") String email,
+								   @RequestParam("salon_id") Long salon_id) {
 		
 		
 		Usuario nuevo = new Usuario(nombre, apellido, email);
-		return s.guardarUsuario(nuevo);
+		return s.guardarUsuario(nuevo, salon_id);
 		
 	}
 	
@@ -53,10 +55,11 @@ public class ControladorAPI {
 	public Usuario apiEditarUsuario(@PathVariable("id") Long id,
 									@RequestParam("nombre") String nombre,
 									@RequestParam("apellido") String apellido,
-									@RequestParam("email") String email) {
+									@RequestParam("email") String email,
+									@RequestParam("salon_id") Long salon_id) {
 		
 		Usuario actualizado = new Usuario(id, nombre, apellido, email);
-		return s.guardarUsuario(actualizado);
+		return s.guardarUsuario(actualizado, salon_id);
 		
 	}
 	
@@ -79,6 +82,11 @@ public class ControladorAPI {
 		
 		return s.guardarDireccion(nuevaDireccion, usuario_id);
 		
+	}
+	
+	@GetMapping("/salones")
+	public List<Salon> apiMuestraSalones() {
+		return s.muestraSalones();
 	}
 	
 }
