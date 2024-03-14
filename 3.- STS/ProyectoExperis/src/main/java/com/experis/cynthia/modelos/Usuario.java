@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -62,6 +63,8 @@ public class Usuario {
 	@JoinColumn(name="salon_id") //Llave foránea
 	private Salon salon;
 	
+	@JsonManagedReference(value="hobbies-json")
+	@JsonIgnore //No mandarlo a través de json al ser guardado
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(
 			name="usuarios_tienen_hobbies",
