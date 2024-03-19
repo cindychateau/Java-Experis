@@ -44,6 +44,10 @@ public class Servicios {
 		return repoUsuarios.save(nuevoUsuario);
 	}
 	
+	public Usuario guardarUsuarioFormulario(Usuario nuevoUsuario) {
+		return repoUsuarios.save(nuevoUsuario);
+	}
+	
 	//Me regrese un obj usuario en base a su ID
 	public Usuario buscarUsuario(Long id) {
 		return repoUsuarios.findById(id).orElse(null);
@@ -88,6 +92,10 @@ public class Servicios {
 		
 		repoUsuarios.save(miUsuario); //repoHobbies.save(miHobby);
 		
+	}
+	
+	public Salon guardarSalon(Salon nuevoSalon) {
+		return repoSalones.save(nuevoSalon);
 	}
 	
 }
