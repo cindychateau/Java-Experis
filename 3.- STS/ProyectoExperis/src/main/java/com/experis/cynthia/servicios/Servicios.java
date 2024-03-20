@@ -98,4 +98,16 @@ public class Servicios {
 		return repoSalones.save(nuevoSalon);
 	}
 	
+	public List<Hobby> muestraHobbies(){
+		return repoHobbies.findAll();
+	}
+	
+	public void quitarUsuarioHobby(Long usuario_id, Long hobby_id) {
+		Usuario miUsuario = buscarUsuario(usuario_id);
+		Hobby miHobby = muestraHobby(hobby_id);
+		
+		miUsuario.getHobbies().remove(miHobby);
+		repoUsuarios.save(miUsuario);
+	}
+	
 }

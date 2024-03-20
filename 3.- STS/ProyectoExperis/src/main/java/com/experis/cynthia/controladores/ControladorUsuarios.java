@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.experis.cynthia.modelos.Hobby;
 import com.experis.cynthia.modelos.Salon;
 import com.experis.cynthia.modelos.Usuario;
 import com.experis.cynthia.servicios.Servicios;
@@ -114,6 +116,66 @@ public class ControladorUsuarios {
 	public String borrarUsuario(@PathVariable("id") Long id) {
 		s.borrarUsuario(id);
 		return "redirect:/dashboard";
+	}
+	
+	@GetMapping("/editar/{id}")
+	public String editarUsuario(@PathVariable("id") Long id,
+								@ModelAttribute("usuario") Usuario usuario,
+								Model model) {
+		
+		//Objeto de usuario que estoy editando
+		Usuario usuarioBuscado = s.buscarUsuario(id);
+		model.addAttribute("usuario", usuarioBuscado);
+		
+		List<Salon> listaSalones = s.muestraSalones();
+		model.addAttribute("salones", listaSalones);
+		
+		return "editar-usuario.jsp";
+		
+	}
+	
+	@PutMapping("/actualizar/{id}") //IMPORTANTE: debe llamarse id
+	public String actualizarUsuario(@Valid @ModelAttribute("usuario") Usuario usuario,
+									BindingResult result,
+									Model model) {
+		if(result.hasErrors()) {
+			List<Salon> listaSalones = s.muestraSalones();
+			model.addAttribute("salones", listaSalones);
+			
+			return "editar-usuario.jsp";
+		} else {
+			s.guardarUsuarioFormulario(usuario);
+			return "redirect:/dashboard";
+		}
+	}
+	
+	@GetMapping("/asignar/{id}")
+	public String asignar(@PathVariable("id") Long id,
+						  Model model) {
+		//Usuario al que le voy a asignar hobbies
+		Usuario usuario = s.buscarUsuario(id);
+		model.addAttribute("usuario", usuario);
+		
+		//Lista Hobbies
+		List<Hobby> hobbies = s.muestraHobbies();
+		model.addAttribute("hobbies", hobbies);
+		
+		return "asignar.jsp";
+	}
+	
+	@GetMapping("/asignarHobby/{usuario_id}/{hobby_id}")
+	public String asignarHobby(@PathVariable("usuario_id") Long usuario_id,
+							   @PathVariable("hobby_id") Long hobby_id) {
+		s.guardarUsuarioHobby(usuario_id, hobby_id);
+		
+		return "redirect:/asignar/"+usuario_id;
+	}
+	
+	@GetMapping("/quitarHobby/{usuario_id}/{hobby_id}")
+	public String quitarHobby(@PathVariable("usuario_id") Long usuario_id,
+							  @PathVariable("hobby_id") Long hobby_id) {
+		s.quitarUsuarioHobby(usuario_id, hobby_id);
+		return "redirect:/asignar/"+usuario_id;
 	}
 	
 }
